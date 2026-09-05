@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart Scanner</title>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🛒 SmartCart</h1>
+
+    <div id="reader"></div>
+
+    <div id="result">
+        Scan a product...
+    </div>
+
+    <script>
+
+        function onScanSuccess(decodedText, decodedResult) {
+
+            document.getElementById("result").innerText =
+                "Barcode: " + decodedText;
+
+            console.log("Scanned:", decodedText);
+        }
+
+        function onScanFailure(error) {
+            // Ignore failed scans
+        }
+
+        let scanner = new Html5QrcodeScanner(
+            "reader",
+            {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 150
+                }
+            },
+            false
+        );
+
+        scanner.render(onScanSuccess, onScanFailure);
+
+    </script>
+
+</body>
+</html>
