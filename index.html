@@ -48,7 +48,22 @@
             document.getElementById("result").innerText =
                 "Barcode: " + decodedText;
 
-            console.log("Scanned:", decodedText);
+            fetch("http://192.168.100.147:5050", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        barcode: decodedText
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log("Mac received barcode:", data);
+})
+.catch(error => {
+    console.error("Could not connect to Mac:", error);
+});
         }
 
         function onScanFailure(error) {
